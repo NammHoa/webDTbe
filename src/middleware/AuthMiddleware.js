@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
-const dotenv = require('dotenv')
-dotenv.config()
+const dotenv = require('dotenv');
+    dotenv.config()
 
 const authMiddleWare = (req,res, next) => {
     const token = req.headers.token.split(' ')[1];
@@ -11,13 +11,12 @@ const authMiddleWare = (req,res, next) => {
                 status: 'ERROR'
             })
         }
-        const { payload } = user;
-        if (payload?.isAdmin) {
+        if (user?.isAdmin) {
             next();
         } else {
-            return res.status(403).json({
-                message: 'Not authorized',
-                status: 'ERROR',
+            return res.status(404).json({
+                message: 'The authemtication',
+                status: 'ERROR'
             });
         }
     });
@@ -33,13 +32,13 @@ const authUserMiddleWare = (req,res, next) => {
                 status: 'ERROR'
             })
         }
-        const { payload } = user
-        if (payload?.isAdmin || payload?.id === userId) {
+        console.log('user', user)
+        if (user?.isAdmin || user?.id === userId) {
             next()
         } else {
-            return res.status(403).json({
-                message: 'Not authorized',
-                status: 'ERROR',
+            return res.status(404).json({
+                message: 'The authemtication',
+                status: 'ERROR'
             });
         }
     });
